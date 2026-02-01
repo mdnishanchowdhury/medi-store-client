@@ -1,14 +1,9 @@
-"use client";
-import { Button } from '@/components/ui/button'
-import { authClient } from '@/lib/auth-client'
+import React from 'react'
 
-export default function page() {
-  const {data}=authClient.useSession();
-  console.log(data)
+export default function Home() {
   return (
     <div>
-      <h1>Medi Store</h1>
-      <Button>Click me</Button>
+      <h1>Welcome to the Home Page</h1>
     </div>
   )
 }

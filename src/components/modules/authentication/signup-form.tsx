@@ -69,7 +69,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
 
   return (
     <Card {...props}>
-      <CardHeader className="text-center space-y-">
+      <CardHeader className="text-center space-y-1">
         <CardTitle className="text-2xl font-bold text-gray-900 dark:text-gray-100">
           Create your account
         </CardTitle>

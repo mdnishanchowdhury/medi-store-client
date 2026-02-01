@@ -6,21 +6,20 @@ import { Footer2 } from "@/components/layout/footer2";
 import { usePathname } from "next/navigation";
 
 export default function CommonLayout({
-  children,
+    children,
 }: {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }) {
-  const pathname = usePathname();
+    const pathname = usePathname();
 
-  // Pages where navbar & footer should be hidden
-  const hideLayoutPages = ["/login", "/signup"];
-  const hideLayout = hideLayoutPages.includes(pathname);
+    const hideLayoutPages = ["/login", "/signup"];
+    const hideLayout = hideLayoutPages.includes(pathname);
 
-  return (
-    <div>
-      {!hideLayout && <Navbar1 />}
-      {children}
-      {!hideLayout && <Footer2 />}
-    </div>
-  );
+    return (
+        <div>
+            {!hideLayout && <Navbar1 />}
+            {children}
+            {!hideLayout && <Footer2 />}
+        </div>
+    );
 }
