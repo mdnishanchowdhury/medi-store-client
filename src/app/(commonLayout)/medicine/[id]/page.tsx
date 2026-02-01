@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { mediService } from "@/services/medi.server";
@@ -11,6 +12,8 @@ import {
     Star,
     CheckCircle2
 } from "lucide-react";
+import OrderButtons from "../OrderButtons";
+import { userService } from "@/services/user.service";
 
 export async function generateStaticParams() {
     const { data } = await mediService.getMedicines();
@@ -25,7 +28,10 @@ export default async function MedicinePage({
     const { id } = await params;
     const { data: medicine } = await mediService.getMedicinesById(id);
     const medi: Medicine = medicine.data;
-
+    const { data: session, } = await userService.getSession();
+    const sellerId = session.user.id
+    const quantity = 2;
+    const shippingAddress ="Dhaka";
     return (
         <div className="w-full max-auto bg-white rounded-[3rem] shadow-2xl shadow-slate-200/50 overflow-hidden border border-slate-100">
             <div className="container mx-auto">
@@ -94,9 +100,13 @@ export default async function MedicinePage({
                         </div>
 
                         <div className="flex flex-col sm:flex-row gap-4">
-                            <Button className="flex-1 h-14 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-md shadow-lg shadow-blue-200 transition-all active:scale-95">
+                            {/* <Button
+                            onClick={handleOrder}
+                            className="flex-1 h-14 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-md shadow-lg shadow-blue-200 transition-all active:scale-95">
                                 <ShoppingCart className="mr-2 h-5 w-5" /> Order Now
-                            </Button>
+                            </Button> */}
+
+                            <OrderButtons shippingAddress={shippingAddress} quantity={quantity} sellerId={sellerId} medicineId={medi.id} price={medi.price}></OrderButtons>
                             <Button variant="outline" className="flex-1 h-14 rounded-2xl border-slate-200 bg-slate-900 text-black font-bold text-md hover:bg-black transition-all">
                                 <MessageSquare className="mr-2 h-5 w-5" /> Inquire Now
                             </Button>

@@ -1,3 +1,4 @@
+"use client"
 import { cn } from "@/lib/utils";
 
 import { Logo, LogoImage, LogoText } from "@/components/layout/logo";
