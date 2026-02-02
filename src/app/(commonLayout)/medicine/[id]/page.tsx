@@ -29,8 +29,6 @@ export default async function MedicinePage({
     const medi: Medicine = medicine.data;
     const { data: session, } = await userService.getSession();
     const sellerId = session.user.id;
-    const shippingAddress = "Dhaka";
-    const phoneNumber = "01739061573";
 
     return (
         <div className="w-full max-auto bg-white rounded-[3rem] shadow-2xl shadow-slate-200/50 overflow-hidden border border-slate-100">
@@ -107,8 +105,6 @@ export default async function MedicinePage({
                                 price={medi.price}
                                 image={medi.image}  
                                 sellerId={sellerId}
-                                phoneNumber={phoneNumber}
-                                shippingAddress={shippingAddress}
                             />
 
                             <Button variant="outline" className="flex-1 h-14 rounded-2xl border-slate-200 bg-slate-900 text-black font-bold text-md hover:bg-black transition-all">

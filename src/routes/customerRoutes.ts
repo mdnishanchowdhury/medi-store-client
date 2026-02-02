@@ -1,12 +1,16 @@
 import { Route } from "@/types";
 
-export const customerRoutes : Route[] = [
+export const customerRoutes: Route[] = [
     {
         title: "Customer Management",
         items: [
             {
-                title: "Create Blog",
-                url: "/dashboard/create-blog",
+                title: "My Orders",
+                url: "/customer-dashboard/myOrders",
+            },
+            {
+                title: "Profile",
+                url: "/customer-dashboard/profile",
             }
         ],
     },

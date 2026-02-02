@@ -1,6 +1,5 @@
 import { orderService } from "@/services/order.server";
 import { Order } from "@/types/order";
-import TrackButton from "../../../components/modules/TrackButton";
 import OrderTrackingVisual from "@/components/layout/OrderTrackingVisual";
 
 export const dynamic = "force-dynamic";
@@ -79,7 +78,6 @@ export default async function OrdersPage() {
                             </div>
                         </div>
                         <OrderTrackingVisual currentStatus={order.status as any} />
-                        <TrackButton orderId={order.id} />
                     </div>
                 ))}
             </div>

@@ -33,25 +33,25 @@ export function CartDropdown() {
             return toast.error("Your cart is empty!");
         }
 
-        const address = "Dhanmondi, Dhaka";
-        const phone = "017XXXXXXXX";
+        const address = items[0]?.shippingAddress;
+        const phone = items[0]?.phoneNumber;
+
+        if (!address || !phone) {
+            return toast.error("Shipping address and phone number are required!");
+        }
 
         toast.promise(handleOrderAction(items, address, phone), {
             loading: 'Processing your order...',
-            // handleCheckout ফাংশনের ভেতর success পার্টটি এভাবে আপডেট করুন:
             success: (res) => {
                 if (res.error) throw new Error(res.error);
 
                 clearCart();
 
-                // API থেকে আসা অর্ডারের আইডি
-                const orderId = res.data.id || res.data._id;
+                // setTimeout(() => {
+                //     router.push("/myOrders"); 
+                // }, 1000);
 
-                setTimeout(() => {
-                    router.push(`/track/${orderId}`); // ডাইনামিক ট্র্যাকিং পেজে রিডাইরেক্ট
-                }, 1500);
-
-                return "অর্ডার সফল হয়েছে! ট্র্যাকিং পেজে নিয়ে যাওয়া হচ্ছে...";
+                return "Order placed successfully! Redirecting...";
             },
             error: (err) => {
                 return `Order failed: ${err.message}`;
@@ -73,18 +73,18 @@ export function CartDropdown() {
             </PopoverTrigger>
 
             <PopoverContent className="w-96 p-5 mr-4 rounded-xl shadow-xl" align="end">
-                <h2 className="text-lg font-semibold mb-4">Shopping Cart</h2>
+                <h2 className="text-lg font-semibold mb-4 text-slate-800">Shopping Cart</h2>
 
                 {items.length === 0 ? (
                     <div className="py-10 text-center space-y-3">
-                        <p className="text-sm text-muted-foreground">Your cart is empty</p>
+                        <p className="text-sm text-muted-foreground font-medium">Your cart is empty</p>
                         <Button
-                            className="w-full rounded-xl gap-2"
+                            className="w-full rounded-xl gap-2 font-bold"
                             variant="outline"
-                            onClick={() => router.push("/orders")}
+                            onClick={() => router.push("/customer-dashboard/myOrders")}
                         >
                             <PackageSearch className="size-4" />
-                            Track Previous Orders
+                            View Previous Orders
                         </Button>
                     </div>
                 ) : (
@@ -93,7 +93,7 @@ export function CartDropdown() {
                             {items.map((item: any) => (
                                 <div
                                     key={item.id}
-                                    className="flex items-center gap-3 border rounded-lg p-2 hover:bg-muted transition"
+                                    className="flex items-center gap-3 border rounded-lg p-2 hover:bg-slate-50 transition"
                                 >
                                     <div className="h-16 w-16 shrink-0 overflow-hidden rounded-lg border bg-slate-50">
                                         <img
@@ -103,33 +103,34 @@ export function CartDropdown() {
                                         />
                                     </div>
 
-                                    <div className="flex-1">
-                                        <h4 className="text-sm font-medium truncate">{item.name}</h4>
-                                        <p className="text-xs text-muted-foreground">Qty: {item.qty}</p>
-                                        <p className="text-sm font-semibold">{formatPrice(item.price * item.qty)}</p>
+                                    <div className="flex-1 min-w-0">
+                                        <h4 className="text-sm font-bold truncate text-slate-800">{item.name}</h4>
+                                        <p className="text-[11px] font-medium text-slate-400">Qty: {item.qty}</p>
+                                        <p className="text-sm font-bold text-blue-600">{formatPrice(item.price * item.qty)}</p>
                                     </div>
 
                                     <Button
                                         size="icon"
                                         variant="ghost"
+                                        className="rounded-full size-8 hover:bg-red-50 hover:text-red-500"
                                         onClick={() => removeItem(item.id)}
                                     >
-                                        <X className="size-4 text-muted-foreground hover:text-red-500" />
+                                        <X className="size-4" />
                                     </Button>
                                 </div>
                             ))}
                         </div>
 
-                        <Separator className="my-4" />
+                        <Separator className="bg-slate-100" />
 
-                        <div className="flex justify-between text-base font-semibold mt-3">
-                            <span>Total</span>
-                            <span>{formatPrice(subtotal)}</span>
+                        <div className="flex justify-between items-center py-2">
+                            <span className="text-sm font-bold text-slate-500 uppercase">Total</span>
+                            <span className="text-lg font-black text-slate-900">{formatPrice(subtotal)}</span>
                         </div>
 
                         <div className="flex flex-col gap-2">
                             <Button
-                                className="w-full rounded-xl bg-blue-600 hover:bg-blue-700"
+                                className="w-full rounded-xl bg-blue-600 hover:bg-blue-700 font-bold h-11"
                                 onClick={handleCheckout}
                             >
                                 Order Now
@@ -137,10 +138,11 @@ export function CartDropdown() {
 
                             <Button
                                 variant="outline"
-                                className="w-full rounded-xl gap-2"
+                                className="w-full rounded-xl gap-2 font-bold text-slate-500"
+                                onClick={() => router.push("/dashboard/orders")}
                             >
                                 <PackageSearch className="size-4" />
-                                Order Tracking
+                                Order History
                             </Button>
                         </div>
                     </div>

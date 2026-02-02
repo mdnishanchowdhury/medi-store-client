@@ -1,12 +1,8 @@
 "use client";
 
-import { Book, Menu, Sunset, Trees, Zap } from "lucide-react";
-
+import { Menu, LogOut, User as UserIcon } from "lucide-react"; 
 import { cn } from "@/lib/utils";
-
-import {
-  Accordion,
-} from "@/components/ui/accordion";
+import { Accordion } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -22,8 +18,10 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import Link from "next/link";
+import { useRouter } from "next/navigation"; 
 import { ModeToggle } from "./ModeToggle";
 import { CartDropdown } from "../modules/cart/CartDropdown";
+import { authClient } from "@/lib/auth-client"; 
 
 interface MenuItem {
   title: string;
@@ -44,38 +42,22 @@ interface Navbar1Props {
   };
   menu?: MenuItem[];
   auth?: {
-    login: {
-      title: string;
-      url: string;
-    };
-    signup: {
-      title: string;
-      url: string;
-    };
+    login: { title: string; url: string };
+    signup: { title: string; url: string };
   };
 }
 
 const Navbar1 = ({
   logo = {
-    url: "https://www.shadcnblocks.com",
+    url: "/",
     src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/shadcnblockscom-icon.svg",
     alt: "logo",
-    title: "Shadcnblocks.com",
+    title: "Medicine Store",
   },
   menu = [
     { title: "Home", url: "/" },
-    {
-      title: "My Orders",
-      url: "/myOrder",
-    },
-    {
-      title: "About",
-      url: "/about",
-    },
-    {
-      title: "Dashboard",
-      url: "/dashboard",
-    }
+    { title: "About", url: "/about" },
+    { title: "Dashboard", url: "/dashboard" },
   ],
   auth = {
     login: { title: "Login", url: "/login" },
@@ -83,23 +65,30 @@ const Navbar1 = ({
   },
   className,
 }: Navbar1Props) => {
+  const router = useRouter();
+  const { data: session, isPending } = authClient.useSession(); 
+
+  const handleLogout = async () => {
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/login");
+          router.refresh();
+        },
+      },
+    });
+  };
+
   return (
-    <section className={cn("py-4", className)}>
+    <section className={cn("py-4 border-b", className)}>
       <div className="container mx-auto px-4">
         {/* Desktop Menu */}
         <nav className="hidden items-center justify-between lg:flex">
           <div className="flex items-center gap-6">
-            {/* Logo */}
-            <a href={logo.url} className="flex items-center gap-2">
-              <img
-                src={logo.src}
-                className="max-h-8 dark:invert"
-                alt={logo.alt}
-              />
-              <span className="text-lg font-semibold tracking-tighter">
-                {logo.title}
-              </span>
-            </a>
+            <Link href={logo.url} className="flex items-center gap-2">
+              <img src={logo.src} className="max-h-8 dark:invert" alt={logo.alt} />
+              <span className="text-lg font-semibold tracking-tighter">{logo.title}</span>
+            </Link>
             <div className="flex items-center">
               <NavigationMenu>
                 <NavigationMenuList>
@@ -108,73 +97,84 @@ const Navbar1 = ({
               </NavigationMenu>
             </div>
           </div>
-          <div className="flex gap-2">
-            {/* <ShoppingCart1></ShoppingCart1> */}
-            <CartDropdown></CartDropdown>
-            <ModeToggle></ModeToggle>
-            <Button asChild variant="outline" size="sm">
-              <a href={auth.login.url}>{auth.login.title}</a>
-            </Button>
-            <Button asChild size="sm">
-              <a href={auth.signup.url}>{auth.signup.title}</a>
-            </Button>
+
+          <div className="flex items-center gap-3">
+            <CartDropdown />
+            <ModeToggle />
+
+            {!isPending && (
+              <>
+                {session ? (
+                  <div className="flex items-center gap-3">
+                     <span className="text-sm font-medium text-muted-foreground">
+                        Hi, {session.user.name.split(' ')[0]}
+                     </span>
+                    <Button variant="destructive" size="sm" onClick={handleLogout} className="gap-2">
+                      <LogOut className="size-4" /> Logout
+                    </Button>
+                  </div>
+                ) : (
+                  <>
+                    <Button asChild variant="outline" size="sm">
+                      <Link href={auth.login.url}>{auth.login.title}</Link>
+                    </Button>
+                    <Button asChild size="sm">
+                      <Link href={auth.signup.url}>{auth.signup.title}</Link>
+                    </Button>
+                  </>
+                )}
+              </>
+            )}
           </div>
         </nav>
 
         {/* Mobile Menu */}
         <div className="block lg:hidden">
           <div className="flex items-center justify-between">
-            {/* Logo */}
-            <a href={logo.url} className="flex items-center gap-2">
-              <img
-                src={logo.src}
-                className="max-h-8 dark:invert"
-                alt={logo.alt}
-              />
-            </a>
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="outline" size="icon">
-                  <Menu className="size-4" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent className="overflow-y-auto">
-                <SheetHeader>
-                  <SheetTitle>
-                    <a href={logo.url} className="flex items-center gap-2">
-                      <img
-                        src={logo.src}
-                        className="max-h-8 dark:invert"
-                        alt={logo.alt}
-                      />
-                    </a>
-                  </SheetTitle>
-                </SheetHeader>
-                <div className="flex flex-col gap-6 p-4">
-                  <Accordion
-                    type="single"
-                    collapsible
-                    className="flex w-full flex-col gap-4"
-                  >
-                    {menu.map((item) => renderMobileMenuItem(item))}
-                  </Accordion>
+            <Link href={logo.url} className="flex items-center gap-2">
+              <img src={logo.src} className="max-h-8 dark:invert" alt={logo.alt} />
+            </Link>
+            <div className="flex items-center gap-2">
+               <CartDropdown />
+               <Sheet>
+                 <SheetTrigger asChild>
+                   <Button variant="outline" size="icon">
+                     <Menu className="size-4" />
+                   </Button>
+                 </SheetTrigger>
+                 <SheetContent side="right" className="overflow-y-auto">
+                   <SheetHeader>
+                     <SheetTitle className="flex items-center gap-2 text-left">
+                        <img src={logo.src} className="max-h-6 dark:invert" alt="logo" />
+                        {logo.title}
+                     </SheetTitle>
+                   </SheetHeader>
+                   <div className="flex flex-col gap-6 p-4 mt-6">
+                     <Accordion type="single" collapsible className="flex w-full flex-col gap-4">
+                       {menu.map((item) => renderMobileMenuItem(item))}
+                     </Accordion>
 
-                  <div className="flex flex-col gap-3">
-
-                    <CartDropdown></CartDropdown>
-
-
-                    <ModeToggle></ModeToggle>
-                    <Button asChild variant="outline">
-                      <a href={auth.login.url}>{auth.login.title}</a>
-                    </Button>
-                    <Button asChild>
-                      <a href={auth.signup.url}>{auth.signup.title}</a>
-                    </Button>
-                  </div>
-                </div>
-              </SheetContent>
-            </Sheet>
+                     <div className="flex flex-col gap-3 pt-4 border-t">
+                       <ModeToggle />
+                       {session ? (
+                         <Button variant="destructive" onClick={handleLogout} className="w-full gap-2">
+                           <LogOut className="size-4" /> Logout ({session.user.name})
+                         </Button>
+                       ) : (
+                         <>
+                           <Button asChild variant="outline" className="w-full">
+                             <Link href={auth.login.url}>{auth.login.title}</Link>
+                           </Button>
+                           <Button asChild className="w-full">
+                             <Link href={auth.signup.url}>{auth.signup.title}</Link>
+                           </Button>
+                         </>
+                       )}
+                     </div>
+                   </div>
+                 </SheetContent>
+               </Sheet>
+            </div>
           </div>
         </div>
       </div>
@@ -182,25 +182,18 @@ const Navbar1 = ({
   );
 };
 
-const renderMenuItem = (item: MenuItem) => {
+const renderMenuItem = (item: MenuItem) => (
+  <NavigationMenuItem key={item.title}>
+    <NavigationMenuLink asChild className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-accent-foreground">
+      <Link href={item.url}>{item.title}</Link>
+    </NavigationMenuLink>
+  </NavigationMenuItem>
+);
 
-  return (
-    <NavigationMenuItem key={item.title}>
-      <NavigationMenuLink asChild
-        href={item.url}
-        className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-accent-foreground"
-      >
-        <Link href={item.url}>{item.title}</Link>
-      </NavigationMenuLink>
-    </NavigationMenuItem>
-  );
-};
+const renderMobileMenuItem = (item: MenuItem) => (
+  <Link key={item.title} href={item.url} className="text-md font-semibold py-2">
+    {item.title}
+  </Link>
+);
 
-const renderMobileMenuItem = (item: MenuItem) => {
-  return (
-    <Link key={item.title} href={item.url} className="text-md font-semibold">
-      {item.title}
-    </Link>
-  );
-};
 export { Navbar1 };
