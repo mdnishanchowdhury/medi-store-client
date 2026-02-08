@@ -2,9 +2,25 @@ import MediCards from "@/components/modules/HomePage/MediCards";
 import { mediService } from "@/services/medi.server";
 import { Medicine } from "@/types/medi.service";
 export const dynamic = "force-dynamic";
+
+// export async function generateStaticParams() {
+//     const { data } = await mediService.getMedicines();
+//     return data?.data?.map((medi: Medicine) => ({ id: medi.id })).splice(0, 3);
+// }
+
 export async function generateStaticParams() {
-    const { data } = await mediService.getMedicines();
-    return data?.data?.map((medi: Medicine) => ({ id: medi.id })).splice(0, 3);
+    try {
+        const res = await mediService.getMedicines();
+        const medicines = res?.data?.data || [];
+
+        if (!Array.isArray(medicines)) return [];
+        return medicines
+            .map((medi: Medicine) => ({ id: medi.id }))
+            .slice(0, 3);
+    } catch (error) {
+        console.error("Error in generateStaticParams:", error);
+        return [];
+    }
 }
 
 export default async function StorePage({
@@ -22,7 +38,8 @@ export default async function StorePage({
         search: search || "",
     });
 
-    const medi: Medicine[] = medicine?.data || [];
+    // const medi: Medicine[] = medicine?.data || [];
+    const medi: Medicine[] = Array.isArray(medicine?.data) ? medicine.data : [];
 
     return (
         <div className="container mx-auto px-4 mt-28">
