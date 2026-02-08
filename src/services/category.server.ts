@@ -18,9 +18,8 @@ export const categoryService = {
             const url = `${API_URL}/category`;
 
             const config: RequestInit = {
-                cache: options?.cache || 'no-store',
                 next: {
-                    revalidate: options?.revalidate,
+                    revalidate: options?.revalidate ?? 3600,
                     tags: ['categories'],
                 },
             };

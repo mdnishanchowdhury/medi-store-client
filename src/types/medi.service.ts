@@ -27,3 +27,17 @@ export interface GetMedicinesResponse {
     success: boolean;
     data: Medicine[];
 }
+
+export interface ServiceOptions {
+    cache?: RequestCache;
+    revalidate?: number;
+}
+
+export interface GetMedicinesParams {
+    isFeatured?: boolean;
+    search?: string;
+    categoryId?: string;
+    minPrice?: number;
+    maxPrice?: number;
+    isActive?: boolean;
+}

@@ -1,4 +1,3 @@
-import React from "react";
 import { Phone, Mail, MapPin, Clock, MessageSquare, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,7 +7,6 @@ export default function ContactPage() {
   return (
     <div className="bg-slate-50 dark:bg-slate-950 min-h-screen pt-24 pb-16">
       <div className="container mx-auto px-4">
-        {/* Header Section */}
         <div className="text-center max-w-2xl mx-auto mb-16">
           <h1 className="text-4xl font-extrabold tracking-tight mb-4">Contact Our Pharmacists</h1>
           <p className="text-muted-foreground text-lg">
@@ -19,7 +17,6 @@ export default function ContactPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           
-          {/* Contact Information Cards */}
           <div className="lg:col-span-1 space-y-6">
             <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-blue-100 dark:border-slate-800">
               <div className="flex items-center gap-4 mb-4">
@@ -62,13 +59,11 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* WhatsApp Integration Prompt */}
             <Button className="w-full h-14 bg-green-600 hover:bg-green-700 text-white rounded-2xl gap-2 text-lg">
               <MessageSquare className="size-5" /> Chat on WhatsApp
             </Button>
           </div>
 
-          {/* Contact Form */}
           <div className="lg:col-span-2">
             <div className="bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 h-full">
               <h2 className="text-2xl font-bold mb-6">Send us a Message</h2>
@@ -89,7 +84,7 @@ export default function ContactPage() {
                   <label className="text-sm font-medium">Message</label>
                   <Textarea 
                     placeholder="Tell us what you need. If inquiring about a medicine, please mention the brand name and dosage." 
-                    className="min-h-[150px]"
+                    className="min-h-37.5"
                   />
                 </div>
                 <div className="md:col-span-2">
@@ -103,8 +98,7 @@ export default function ContactPage() {
 
         </div>
 
-        {/* Map Placeholder */}
-        <div className="mt-12 w-full h-[400px] rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800">
+        <div className="mt-12 w-full h-100 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800">
           <iframe 
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14602.254272231177!2d90.3654215!3d23.7985508!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c0b9613144df%3A0x6475d42171e2e171!2sDhaka!5e0!3m2!1sen!2sbd!4v1710000000000!5m2!1sen!2sbd" 
             width="100%" 

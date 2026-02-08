@@ -21,7 +21,6 @@ export async function handleOrderAction(
 
     const res = await orderService.createOrder(orderData);
     if (res.data) {
-        // revalidateTag('orders'); 
         revalidateTag('orders', '');
     }
 

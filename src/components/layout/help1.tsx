@@ -2,13 +2,10 @@
 
 import {
   ChevronRight,
-  CreditCard,
   HelpCircle,
-  Package,
   RotateCcw,
   Search,
   Truck,
-  User,
   Pill,
   ClipboardList,
   ShieldCheck,

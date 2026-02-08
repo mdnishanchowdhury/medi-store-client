@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { ArrowRight } from "lucide-react";
 
 const CategorySection = ({ categories }) => {
     const searchParams = useSearchParams();

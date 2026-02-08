@@ -1,10 +1,6 @@
 import { Order } from "@/types/order";
 import { cookies } from "next/headers";
 const API_URL = process.env.API_URL;
-interface ServiceOptions {
-    cache?: RequestCache;
-    revalidate?: number;
-}
 export const orderService = {
     createOrder: async function (orderData: any) {
         try {
@@ -63,7 +59,7 @@ export const orderService = {
 
             const res = await fetch(`${API_URL}/api/orders`, {
                 headers: {
-                    cookie: cookieStore.toString(), // send auth cookie
+                    cookie: cookieStore.toString(), 
                 },
                 cache: "no-store",
             });

@@ -46,11 +46,6 @@ export function CartDropdown() {
                 if (res.error) throw new Error(res.error);
 
                 clearCart();
-
-                // setTimeout(() => {
-                //     router.push("/myOrders"); 
-                // }, 1000);
-
                 return "Order placed successfully! Redirecting...";
             },
             error: (err) => {

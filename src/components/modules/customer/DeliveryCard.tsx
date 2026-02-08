@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
-import { CheckCircle2, Package, Calendar, Tag } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Package, ChevronRight, ShoppingBag } from "lucide-react";
+import Link from "next/link";
+import OrderTrackingVisual from "@/components/layout/OrderTrackingVisual";
 
 interface DashboardProps {
   initialOrders: any[];
@@ -18,64 +19,100 @@ export default function DeliveryCard({ initialOrders = [] }: DashboardProps) {
   const deliveredOrders = useMemo(() => {
     if (!Array.isArray(initialOrders)) return [];
     return initialOrders.filter(
-      (order: any) => order.status?.toString().trim().toUpperCase() === "DELIVERED"
+      (order: any) => order.status?.toUpperCase() === "DELIVERED"
     );
   }, [initialOrders]);
+
+  const totalItemsToReview = useMemo(() => {
+    return deliveredOrders.reduce((acc, order) => {
+      const unreviewedInOrder = order.orderItems.filter((item: any) => !item.review).length;
+      return acc + unreviewedInOrder;
+    }, 0);
+  }, [deliveredOrders]);
 
   if (!mounted) return null;
 
   return (
-    <div className="p-4">
-      {deliveredOrders.length > 0 ? (
-        deliveredOrders.map((order: any) => (
-          <Card key={order.id} className="border-none shadow-md bg-white overflow-hidden hover:ring-1 ring-emerald-500 transition-all">
-            <CardContent className="p-0">
-              <div className="bg-emerald-500 p-2 flex justify-between items-center text-white px-4">
-                <div className="flex items-center gap-2 text-xs font-bold">
-                  <Package size={14} />
-                  <span>ORDER #{order.id.slice(-8).toUpperCase()}</span>
-                </div>
-                <div className="flex items-center gap-1 bg-white/20 px-2 py-0.5 rounded text-[10px]">
-                  <CheckCircle2 size={12} />
-                  <span>DELIVERED</span>
-                </div>
-              </div>
+    <div className="p-4 space-y-6 min-h-screen w-full mx-auto">
+      <div className="flex items-center justify-between mb-6 px-2">
+        <div className="flex items-center gap-2">
+          <div className="bg-blue-600 p-2 rounded-lg text-white">
+            <Package size={20} />
+          </div>
+          <h2 className="text-xl font-black text-gray-800 tracking-tight">Pending Reviews</h2>
+        </div>
+        <div className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold">
+          {totalItemsToReview} {totalItemsToReview === 1 ? 'Item' : 'Items'}
+        </div>
+      </div>
 
-              <div className="p-4 space-y-3">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <p className="text-[10px] text-slate-400 uppercase font-bold tracking-tight">Shipping Address</p>
-                    <p className="text-sm text-slate-700 font-medium leading-tight">{order.shippingAddress}</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-[10px] text-slate-400 uppercase font-bold tracking-tight">Amount</p>
-                    <p className="text-lg font-black text-emerald-600">{order.totalAmount}৳</p>
-                  </div>
-                </div>
+      {deliveredOrders.length > 0 && totalItemsToReview > 0 ? (
+        deliveredOrders.map((order: any) =>
+          order.orderItems.map((item: any) => {
+            if (item.review) return null;
 
-                <div className="pt-2 border-t border-slate-50 flex justify-between items-center">
-                  <div className="flex items-center gap-2 text-slate-500">
-                    <Calendar size={14} />
-                    <span className="text-[11px] font-medium">
-                      {new Date(order.createdAt).toLocaleDateString('en-GB', {
-                        day: 'numeric',
-                        month: 'short',
-                        year: 'numeric'
-                      })}
+            return (
+              <div
+                key={item.id}
+                className="w-full bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow duration-300 relative"
+              >
+                <div className="h-1.5 w-full bg-blue-600"></div>
+
+                <div className="p-5 flex flex-col">
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">
+                        ORDER ID
+                      </p>
+                      <p className="text-sm font-mono font-bold text-gray-700">
+                        #{order.id.slice(-8).toLowerCase()}
+                      </p>
+                    </div>
+                    <span className="bg-green-100 text-green-600 px-3 py-1 rounded-md text-[10px] font-black uppercase tracking-wider">
+                      {order.status}
                     </span>
                   </div>
-                  <div className="flex items-center gap-1 text-slate-500">
-                    <Tag size={14} />
-                    <span className="text-[11px] font-medium">{order.phoneNumber}</span>
+
+                  <div className="bg-gray-50 border border-gray-100 rounded-xl p-3 mb-4 flex items-center gap-4">
+                    <div className="w-14 h-14 bg-white rounded-lg border border-gray-100 p-1 shrink-0">
+                      <img
+                        src={item.medicine.image}
+                        alt={item.medicine.name}
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-sm font-bold text-gray-800 line-clamp-1">
+                        {item.medicine.name}
+                      </h3>
+                      <p className="text-xs text-gray-500">
+                        Quantity: {item.quantity}
+                      </p>
+                    </div>
+                    <span className="text-sm font-bold text-gray-900">
+                      ${(item.price * item.quantity).toFixed(2)}
+                    </span>
                   </div>
+
+                  <div className="py-2">
+                    <OrderTrackingVisual currentStatus={order.status as any} />
+                  </div>
+
+                  <Link href={`/medicine/${item.medicineId}`} className="block mt-4">
+                    <button className="w-full bg-blue-600 hover:bg-blue-700 text-white text-xs py-3 rounded-xl font-bold transition-all flex items-center justify-center gap-2 group tracking-widest">
+                      WRITE A REVIEW
+                      <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                    </button>
+                  </Link>
                 </div>
               </div>
-            </CardContent>
-          </Card>
-        ))
+            );
+          })
+        )
       ) : (
-        <div className="col-span-full text-center py-10 text-slate-400 border-2 border-dashed rounded-xl">
-          No delivered products to show.
+        <div className="text-center py-20 bg-white rounded-3xl border-2 border-dashed border-gray-200">
+          <ShoppingBag className="mx-auto text-gray-300 mb-4" size={48} />
+          <p className="text-gray-400 font-bold uppercase tracking-widest text-sm">No items to review</p>
         </div>
       )}
     </div>

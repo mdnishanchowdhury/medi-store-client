@@ -39,7 +39,7 @@ export default async function Page({
               orientation="vertical"
               className="h-4 bg-slate-200 hidden md:block"
             />
-            <div className="relative hidden lg:block w-full max-w-[280px] group">
+            <div className="relative hidden lg:block w-full max-w-70 group">
               <SearchBar />
             </div>
           </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 interface Logo {
   name: string;
@@ -24,13 +24,13 @@ const Logos8 = ({ className }: { className?: string }) => {
   const firstRow = [...PHARMA_LOGOS, ...PHARMA_LOGOS];
   const secondRow = [...PHARMA_LOGOS, ...PHARMA_LOGOS];
 
-  const marqueeVariants = (direction: "left" | "right") => ({
+  const marqueeVariants = (direction: "left" | "right"): Variants => ({
     animate: {
       x: direction === "left" ? ["0%", "-50%"] : ["-50%", "0%"],
       transition: {
         x: {
           repeat: Infinity,
-          repeatType: "loop",
+          repeatType: "loop" as const, 
           duration: 30,
           ease: "linear",
         },
@@ -46,14 +46,12 @@ const Logos8 = ({ className }: { className?: string }) => {
       </div>
 
       <div className="relative flex flex-col gap-8 md:gap-12">
-        <div className="absolute left-0 top-0 bottom-0 w-24 " />
-        <div className="absolute right-0 top-0 bottom-0 w-24 " />
-
+        {/* Row 1 */}
         <motion.div
           className="flex whitespace-nowrap gap-12 md:gap-20 items-center"
           variants={marqueeVariants("left")}
           animate="animate"
-          whileHover={{ animationPlayState: "paused" }}
+          style={{ cursor: "default" }}
         >
           {firstRow.map((logo, index) => (
             <div key={index} className="flex-shrink-0 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
@@ -62,11 +60,12 @@ const Logos8 = ({ className }: { className?: string }) => {
           ))}
         </motion.div>
 
+        {/* Row 2 */}
         <motion.div
           className="flex whitespace-nowrap gap-12 md:gap-20 items-center"
           variants={marqueeVariants("right")}
           animate="animate"
-          whileHover={{ animationPlayState: "paused" }}
+          style={{ cursor: "default" }}
         >
           {secondRow.map((logo, index) => (
             <div key={index} className="flex-shrink-0 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">

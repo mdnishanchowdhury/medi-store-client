@@ -1,18 +1,8 @@
+import { GetMedicinesParams, ServiceOptions } from "@/types/medi.service";
+
 const API_URL = process.env.API_URL;
 
-interface ServiceOptions {
-    cache?: RequestCache;
-    revalidate?: number;
-}
 
-interface GetMedicinesParams {
-    isFeatured?: boolean;
-    search?: string;
-    categoryId?: string;
-    minPrice?: number;
-    maxPrice?: number;
-    isActive?: boolean;
-}
 
 export const mediService = {
     getMedicines: async function (

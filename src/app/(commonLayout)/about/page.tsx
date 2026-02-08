@@ -1,6 +1,5 @@
-import React from "react";
 import { CheckCircle2, ShieldCheck, Truck, Users } from "lucide-react";
-
+export const dynamic = "force-dynamic";
 const stats = [
   { label: "Genuine Medicines", value: "100%", icon: ShieldCheck },
   { label: "Happy Customers", value: "50k+", icon: Users },
@@ -12,19 +11,17 @@ export default function About() {
     <section className="py-24 bg-white dark:bg-slate-950 overflow-hidden">
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row items-center gap-16">
-          
-          {/* Left Side: Image/Visual Area */}
+
           <div className="w-full lg:w-1/2 ">
             <div className="rounded-2xl overflow-hidden shadow-2xl">
-              <img 
-                src="https://images.unsplash.com/photo-1586015555751-63bb77f4322a?auto=format&fit=crop&q=80&w=800" 
-                alt="Pharmacist working" 
+              <img
+                src="https://images.unsplash.com/photo-1586015555751-63bb77f4322a?auto=format&fit=crop&q=80&w=800"
+                alt="Pharmacist working"
                 className="w-full h-auto object-cover"
               />
             </div>
           </div>
 
-          {/* Right Side: Content Area */}
           <div className="w-full lg:w-1/2 space-y-8">
             <div className="space-y-4">
               <h2 className="text-blue-600 font-bold tracking-wider uppercase text-sm">About MediCare Store</h2>
@@ -57,7 +54,6 @@ export default function About() {
               </div>
             </div>
 
-            {/* Stats Row */}
             <div className="pt-8 border-t flex flex-wrap gap-8 justify-between">
               {stats.map((stat, index) => (
                 <div key={index} className="space-y-1">
