@@ -1,5 +1,5 @@
 "use client";
-
+export const dynamic = "force-dynamic";
 import { authClient } from "@/lib/auth-client";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState, Suspense } from "react"; 

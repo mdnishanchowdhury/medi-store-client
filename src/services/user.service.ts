@@ -85,4 +85,33 @@ export const userService = {
             };
         }
     },
+    updateUser: async function (id: string, userData: any) {
+        try {
+            const cookiesStore = await cookies();
+            const res = await fetch(`${API_URL}/api/users/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    cookie: cookiesStore.toString(),
+                },
+                body: JSON.stringify(userData),
+            });
+
+            const result = await res.json();
+
+            if (!res.ok) {
+                throw new Error(result.message || "Failed to update user");
+            }
+
+            return { data: result.data, error: null };
+        } catch (error: any) {
+            return {
+                data: null,
+                error: {
+                    message: error?.message || "Something went wrong during update",
+                },
+            };
+        }
+    },
+
 }

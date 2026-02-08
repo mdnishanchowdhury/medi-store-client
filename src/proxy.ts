@@ -39,6 +39,6 @@ export const config = {
     "/admin-dashboard/:path*",
     "/seller-dashboard/:path*",
     "/customer-dashboard/:path*",
-    "/medicine/:path*",
+    // "/medicine/:path*",
   ],
 };

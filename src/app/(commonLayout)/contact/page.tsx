@@ -2,7 +2,7 @@ import { Phone, Mail, MapPin, Clock, MessageSquare, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-
+export const dynamic = "force-dynamic";
 export default function ContactPage() {
   return (
     <div className="bg-slate-50 dark:bg-slate-950 min-h-screen pt-24 pb-16">

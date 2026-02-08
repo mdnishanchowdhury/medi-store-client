@@ -15,6 +15,7 @@ import { useForm } from "@tanstack/react-form";
 import Link from "next/link";
 import { toast } from "sonner";
 import * as z from "zod";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const formSchema = z.object({
   email: z.email(),
@@ -23,13 +24,16 @@ const formSchema = z.object({
 
 
 export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
 
   const handleGoogleLogin = async () => {
     const data = await authClient.signIn.social({
       provider: "google",
-      callbackURL: "http://localhost:3000"
+      callbackURL: window.location.origin + callbackUrl
     });
-    console.log("data", data)
   };
 
   const form = useForm({
@@ -52,6 +56,8 @@ export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
         }
 
         toast.success("Account Login successfully.", { id: toastId });
+        router.push(callbackUrl);
+        router.refresh();
 
       } catch (error) {
         toast.error("An unexpected error occurred. Please try again later.", { id: toastId });
@@ -145,7 +151,7 @@ export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
             Continue with Google
           </Button>
 
-           <p className="text-center text-gray-600 dark:text-gray-400 mt-4">
+          <p className="text-center text-gray-600 dark:text-gray-400 mt-4">
             Don't have an account?{" "}
             <Link
               href="/signup"

@@ -1,5 +1,5 @@
 import ProfileUpdate from "@/components/DashboardInfo/ProfileUpdate";
-export const dynamic = "force-dynamic";
-export default function CustomerProfile() {
+
+export default function AdminProfile() {
   return <ProfileUpdate/>;
 }

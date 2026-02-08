@@ -1,8 +1,7 @@
 import MediCards from "@/components/modules/HomePage/MediCards";
 import { mediService } from "@/services/medi.server";
 import { Medicine } from "@/types/medi.service";
-import SearchBar from "@/components/modules/Store/SearchBar";
-
+export const dynamic = "force-dynamic";
 export async function generateStaticParams() {
     const { data } = await mediService.getMedicines();
     return data?.data?.map((medi: Medicine) => ({ id: medi.id })).splice(0, 3);

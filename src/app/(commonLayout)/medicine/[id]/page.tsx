@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { mediService } from "@/services/medi.server";
 import { Medicine } from "@/types/medi.service";
+export const dynamic = "force-dynamic";
 import {
     Building2,
     Star,
@@ -18,6 +19,7 @@ export default async function MedicinePage({ params }: { params: { id: string } 
 
     const { data: session } = await userService.getSession();
     const sellerId = session?.user?.id;
+    const isAuthenticated = !!session;
 
     const { data: usersResponse } = await userService.getUsers();
     const allUsers = Array.isArray(usersResponse?.data) ? usersResponse.data : (Array.isArray(usersResponse) ? usersResponse : []);
@@ -35,7 +37,7 @@ export default async function MedicinePage({ params }: { params: { id: string } 
         : "0.0";
 
     return (
-        <div className="w-full max-w-7xl mx-auto mb-10 pt-15 px-4">
+        <div className="w-full max-w-7xl mx-auto mb-10 pt-24 px-4">
             <div className="bg-white dark:bg-zinc-950 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.05)] overflow-hidden border border-slate-100 dark:border-zinc-800">
                 <div className="flex flex-col lg:flex-row">
 
@@ -101,6 +103,7 @@ export default async function MedicinePage({ params }: { params: { id: string } 
                                 name={medi.name}
                                 price={medi.price}
                                 image={medi.image}
+                                isAuthenticated={isAuthenticated}
                                 sellerId={sellerId}
                             />
                         </div>
@@ -124,43 +127,45 @@ export default async function MedicinePage({ params }: { params: { id: string } 
                         </div>
 
                         <div className="lg:col-span-2 space-y-8">
-                            <div className="space-y-4 max-h-112.5 overflow-y-auto pr-4 custom-scrollbar">
-                                {reviewersDetails.length > 0 ? (
-                                    reviewersDetails.map((review: any) => (
-                                        <div key={review.id} className="p-6 rounded-[1.5rem] bg-white dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800 shadow-sm space-y-4">
-                                            <div className="flex justify-between items-start">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="w-10 h-10 rounded-full bg-slate-100 overflow-hidden">
-                                                        <img
-                                                            src={review.userInfo?.image}
-                                                            alt="image"
-                                                            className="w-full h-full object-cover"
-                                                        />
-                                                    </div>
-                                                    <div>
-                                                        <div className="flex items-center gap-1.5">
-                                                            <span className="text-sm font-bold text-slate-800 dark:text-slate-200">{review.userInfo?.name}</span>
-                                                            <CheckCircle2 size={14} className="text-blue-500" />
+                            <div className="space-y-4 max-h-112.5 overflow-y-auto pr-4 custom-scrollbar py-5">
+                                {
+                                    reviewersDetails.length > 0 ? (
+                                        reviewersDetails.map((review: any) => (
+                                            <div key={review.id} className="p-6 rounded-[1.5rem] bg-white dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800 shadow-sm space-y-4">
+                                                <div className="flex justify-between items-start">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="w-10 h-10 rounded-full bg-slate-100 overflow-hidden">
+                                                            <img
+                                                                src={review.userInfo?.image}
+                                                                alt="image"
+                                                                className="w-full h-full object-cover"
+                                                            />
                                                         </div>
-                                                        <div className="flex gap-0.5">
-                                                            {[...Array(5)].map((_, i) => (
-                                                                <Star key={i} size={10} className={i < review.rating ? "fill-amber-400 text-amber-400" : "text-slate-200"} />
-                                                            ))}
+                                                        <div>
+                                                            <div className="flex items-center gap-1.5">
+                                                                <span className="text-sm font-bold text-slate-800 dark:text-slate-200">{review.userInfo?.name}</span>
+                                                                <CheckCircle2 size={14} className="text-blue-500" />
+                                                            </div>
+                                                            <div className="flex gap-0.5">
+                                                                {[...Array(5)].map((_, i) => (
+                                                                    <Star key={i} size={10} className={i < review.rating ? "fill-amber-400 text-amber-400" : "text-slate-200"} />
+                                                                ))}
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    <span className="text-[11px] text-slate-400">
+                                                        {new Date(review.createdAt).toLocaleDateString()}
+                                                    </span>
                                                 </div>
-                                                <span className="text-[11px] text-slate-400">
-                                                    {new Date(review.createdAt).toLocaleDateString()}
-                                                </span>
+                                                <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                                                    "{review.comment}"
+                                                </p>
                                             </div>
-                                            <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                                                "{review.comment}"
-                                            </p>
-                                        </div>
-                                    ))
-                                ) : (
-                                    <div className="text-center py-10 text-slate-400 italic">No reviews yet.</div>
-                                )}
+                                        ))
+                                    ) : (
+                                        <div className="text-center py-10 text-slate-400 italic">No reviews yet.</div>
+                                    )
+                                }
                             </div>
 
                             <ReviewFormModal
