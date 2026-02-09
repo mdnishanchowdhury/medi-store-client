@@ -3,11 +3,6 @@ import { mediService } from "@/services/medi.server";
 import { Medicine } from "@/types/medi.service";
 export const dynamic = "force-dynamic";
 
-// export async function generateStaticParams() {
-//     const { data } = await mediService.getMedicines();
-//     return data?.data?.map((medi: Medicine) => ({ id: medi.id })).splice(0, 3);
-// }
-
 export async function generateStaticParams() {
     try {
         const res = await mediService.getMedicines();
@@ -38,7 +33,6 @@ export default async function StorePage({
         search: search || "",
     });
 
-    // const medi: Medicine[] = medicine?.data || [];
     const medi: Medicine[] = Array.isArray(medicine?.data) ? medicine.data : [];
 
     return (

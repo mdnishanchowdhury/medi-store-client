@@ -41,3 +41,12 @@ export interface GetMedicinesParams {
     maxPrice?: number;
     isActive?: boolean;
 }
+export interface addMedicine {
+    name: string;
+    description: string;
+    price: number;
+    stock: number;
+    image: string;
+    manufacturer: string;
+    categoryId: string;
+}

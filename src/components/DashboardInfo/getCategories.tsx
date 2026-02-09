@@ -20,7 +20,7 @@ export default async function CategoryList() {
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-bold">All Categories</h2>
                 <Link href="/admin-dashboard/allCategory/addCategory">
-                    <Button size="sm">Add New Category</Button>
+                    <Button className="bg-blue-600 hover:bg-blue-700">Add New Category</Button>
                 </Link>
             </div>
 

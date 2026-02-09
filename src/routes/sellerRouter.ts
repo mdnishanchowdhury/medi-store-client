@@ -30,8 +30,8 @@ export const sellerRoutes: Route[] = [
         title: "Account Management",
         items: [
             {
-                title: "Add Category",
-                url: "/seller-dashboard/addCategory",
+                title: "All Category",
+                url: "/seller-dashboard/allCategory",
                 icon: LayoutGrid
             },
             {

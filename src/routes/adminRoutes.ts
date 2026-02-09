@@ -36,7 +36,7 @@ export const adminRoutes: Route[] = [
             },
             {
                 title: "Add Medicine",
-                url: "/admin-dashboard/addMedicine",
+                url: "/admin-dashboard/allMedicine",
                 icon: Pill
             },
             {
