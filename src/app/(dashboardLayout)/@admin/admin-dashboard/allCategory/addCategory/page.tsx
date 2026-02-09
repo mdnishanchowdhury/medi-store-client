@@ -1,5 +1,5 @@
-import AddCategoryForm from "@/components/DashboardInfo/AddCategoryForm";
+import AdminAddCategoryForm from "@/components/Dashboard/AdminComponent/AdminAddCategoryForm";
 export const dynamic = "force-dynamic";
 export default function AdminAddCategory() {
-  return <AddCategoryForm/>;
+  return <AdminAddCategoryForm/>;
 }

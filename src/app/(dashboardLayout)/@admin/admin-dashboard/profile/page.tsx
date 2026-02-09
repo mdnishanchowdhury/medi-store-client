@@ -1,4 +1,4 @@
-import ProfileUpdate from "@/components/DashboardInfo/ProfileUpdate";
+import ProfileUpdate from "@/components/Dashboard/ProfileUpdate";
 
 export default function AdminProfile() {
   return <ProfileUpdate/>;

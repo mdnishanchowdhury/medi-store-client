@@ -1,4 +1,4 @@
-import EditMedicineForm from "@/components/Dashboard/AdminComponent/AdminEditMedicineForm";
+import SellerEditMedicineForm from "@/components/Dashboard/SellerComponent/SellerEditMedicineForm";
 import { categoryService } from "@/services/category.server";
 import { mediService } from "@/services/medi.server";
 import { notFound } from "next/navigation";
@@ -30,7 +30,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 
     return (
         <div className="max-w-4xl mx-auto p-6">
-            <EditMedicineForm medicine={medicine} categories={categories} />
+            <SellerEditMedicineForm medicine={medicine} categories={categories} />
         </div>
     );
 }

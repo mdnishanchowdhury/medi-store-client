@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { useState } from "react";
 import { deleteCategoryAction } from "@/actions/category.actions";
 
-export default function DeleteCategoryButton({ id }: { id: string }) {
+export default function AdminDeleteCategoryButton({ id }: { id: string }) {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
 

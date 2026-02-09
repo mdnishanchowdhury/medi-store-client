@@ -21,6 +21,7 @@ export async function deleteCategoryAction(id: string): Promise<ActionResponse> 
         }
 
         revalidatePath("/admin-dashboard/allCategory");
+        revalidatePath("/seller-dashboard/allCategory");
         return { success: true };
     } catch (error: any) {
         return { success: false, error: "Failed to delete category" };
@@ -39,6 +40,7 @@ export async function updateCategoryAction(id: string, formData: any): Promise<A
         }
 
         revalidatePath("/admin-dashboard/allCategory");
+        revalidatePath("/seller-dashboard/allCategory");
         return { success: true, data: res.data };
     } catch (error: any) {
         return { success: false, error: "An unexpected error occurred during update" };
@@ -52,6 +54,7 @@ export async function addCategoryAction(formData: any) {
         if (result && !result.error) {
             revalidateTag('categories', 'max');
             revalidatePath("/admin-dashboard/allCategory");
+            revalidatePath("/seller-dashboard/allCategory");
         }
 
         return result;

@@ -1,7 +1,7 @@
 "use server";
 
 import { orderService } from "@/services/order.server";
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 export async function handleOrderAction(
     items: any[],
@@ -25,5 +25,17 @@ export async function handleOrderAction(
     }
 
     return res;
+}
+export async function updateOrderStatusAction(id: string, newStatus: string) {
+    try {
+        const res = await orderService.updateOrdersStatus(id, { status: newStatus } as any);
+
+        if (res.error) return { success: false, error: res.error.message };
+
+        revalidatePath("/admin-dashboard/customerOrders");
+        return { success: true };
+    } catch (error) {
+        return { success: false, error: "Failed to update" };
+    }
 }
 

@@ -4,9 +4,9 @@ import { Category } from "@/types/medi.service";
 import { Button } from "@/components/ui/button";
 import { Edit } from "lucide-react";
 import Link from "next/link";
-import DeleteCategoryButton from "./DeleteCategoryButton";
+import DeleteCategoryButton from "./AdminDeleteCategoryButton";
 
-export default async function CategoryList() {
+export default async function AdminCategoryList() {
     let categories: Category[] = [];
     try {
         const { data } = await categoryService.getCategories({ cache: "no-store" });

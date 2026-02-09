@@ -1,5 +1,5 @@
-import CategoryList from "@/components/DashboardInfo/getCategories";
+import AdminCategoryList from "@/components/Dashboard/AdminComponent/AdminCategoryList";
 export const dynamic = "force-dynamic";
 export default function AdminAllCategory() {
-  return <CategoryList/>;
+  return <AdminCategoryList/>;
 }

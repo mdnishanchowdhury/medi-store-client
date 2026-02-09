@@ -18,7 +18,7 @@ interface EditMedicineFormProps {
     categories: any[];
 }
 
-export default function EditMedicineForm({ medicine, categories }: EditMedicineFormProps) {
+export default function SellerEditMedicineForm({ medicine, categories }: EditMedicineFormProps) {
     const router = useRouter();
     const [selectedCategory, setSelectedCategory] = useState(medicine?.categoryId || "");
 
@@ -47,7 +47,7 @@ export default function EditMedicineForm({ medicine, categories }: EditMedicineF
 
         if (res?.success) {
             toast.success("Medicine updated successfully!");
-            router.push("/admin-dashboard/allMedicine");
+            router.push("/seller-dashboard/allMedicine");
             router.refresh();
         } else {
             const errorMsg = typeof res?.error === 'object' ? res.error.message : res?.error;
@@ -115,11 +115,13 @@ export default function EditMedicineForm({ medicine, categories }: EditMedicineF
                                     <SelectValue placeholder="Select Category" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    {categories.map((cat) => (
-                                        <SelectItem key={cat._id || cat.id} value={cat._id || cat.id}>
-                                            {cat.categoryName}
-                                        </SelectItem>
-                                    ))}
+                                    {
+                                        categories.map((cat) => (
+                                            <SelectItem key={cat._id || cat.id} value={cat._id || cat.id}>
+                                                {cat.categoryName}
+                                            </SelectItem>
+                                        ))
+                                    }
                                 </SelectContent>
                             </Select>
                         </div>

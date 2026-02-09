@@ -17,6 +17,7 @@ export async function addMedicineAction(formData: any) {
         if (result && !result.error) {
             revalidateTag('medicines', 'max');
             revalidatePath("/admin-dashboard/allMedicine");
+            revalidatePath("/seller-dashboard/allCategory");
         }
 
         return result;
@@ -44,6 +45,7 @@ export async function updateMedicineAction(id: string, formData: any): Promise<A
         }
 
         revalidatePath("/admin-dashboard/allMedicine");
+        revalidatePath("/seller-dashboard/allCategory");
         return { success: true, data: res.data };
     } catch (error: any) {
         return { success: false, error: "An unexpected error occurred during update" };
@@ -63,6 +65,7 @@ export async function deleteMedicineAction(id: string): Promise<ActionResponse> 
         }
 
         revalidatePath("/admin-dashboard/allMedicine");
+        revalidatePath("/seller-dashboard/allCategory");
         return { success: true };
     } catch (error: any) {
         return { success: false, error: "Failed to delete category" };

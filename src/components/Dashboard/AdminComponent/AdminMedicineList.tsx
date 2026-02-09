@@ -5,9 +5,10 @@ import { Edit, Package } from "lucide-react";
 import Link from "next/link";
 import { addMedicine } from "@/types/medi.service";
 import { categoryService } from "@/services/category.server";
-import DeleteMedicineButton from "./DeleteMedicineButton";
+import DeleteMedicineButton from "../DeleteMedicineButton";
 
-export default async function MedicineList() {
+export default async function AdminMedicineList() {
+
     let medicines: addMedicine[] = [];
     try {
         const { data } = await mediService.getMedicines({}, { cache: "no-store" });
@@ -32,6 +33,9 @@ export default async function MedicineList() {
         const category = categories.find((cat: any) => (cat.id || cat._id) === id);
         return category ? category.categoryName : "Unknown Category";
     };
+
+
+
 
     return (
         <div className="p-4">

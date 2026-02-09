@@ -12,7 +12,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { toast } from "sonner";
 import { addMedicineAction } from "@/actions/medicine.actions";
 
-export default function AddMedicineForm({ categories }: { categories: any[] }) {
+export default function SellerAddMedicineForm({ categories }: { categories: any[] }) {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState<string>("");
@@ -45,7 +45,7 @@ export default function AddMedicineForm({ categories }: { categories: any[] }) {
             if (result && !result.error) {
                 toast.success("Medicine added successfully!", { id: toastId });
                 router.refresh();
-                router.push("/admin-dashboard/allMedicine");
+                router.push("/seller-dashboard/allMedicine");
             } else {
                 toast.error(result?.error?.message || "Failed to add medicine", { id: toastId });
             }
@@ -114,15 +114,17 @@ export default function AddMedicineForm({ categories }: { categories: any[] }) {
                                         </div>
                                     </SelectTrigger>
                                     <SelectContent>
-                                        {categories.length > 0 ? (
-                                            categories.map((cat) => (
-                                                <SelectItem key={cat._id || cat.id} value={cat._id || cat.id}>
-                                                    {cat.categoryName}
-                                                </SelectItem>
-                                            ))
-                                        ) : (
-                                            <SelectItem value="none" disabled>No categories found</SelectItem>
-                                        )}
+                                        {
+                                            categories.length > 0 ? (
+                                                categories.map((cat) => (
+                                                    <SelectItem key={cat._id || cat.id} value={cat._id || cat.id}>
+                                                        {cat.categoryName}
+                                                    </SelectItem>
+                                                ))
+                                            ) : (
+                                                <SelectItem value="none" disabled>No categories found</SelectItem>
+                                            )
+                                        }
                                     </SelectContent>
                                 </Select>
                             </div>

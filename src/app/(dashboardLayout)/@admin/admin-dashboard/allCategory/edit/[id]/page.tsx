@@ -1,4 +1,4 @@
-import EditCategoryForm from "@/components/DashboardInfo/EditCategoryForm";
+import AdminEditCategoryForm from "@/components/Dashboard/AdminComponent/AdminEditCategoryForm";
 import { categoryService } from "@/services/category.server";
 import { notFound } from "next/navigation";
 export const dynamic = "force-dynamic";
@@ -17,7 +17,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
     return (
         <div className="max-w-2xl mx-auto p-6">
             <h1 className="text-2xl font-bold mb-6">Update Category</h1>
-            <EditCategoryForm category={category} />
+            <AdminEditCategoryForm category={category} />
         </div>
     );
 }

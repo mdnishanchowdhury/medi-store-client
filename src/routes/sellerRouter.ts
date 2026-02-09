@@ -35,14 +35,19 @@ export const sellerRoutes: Route[] = [
                 icon: LayoutGrid
             },
             {
-                title: "Add Medicine",
-                url: "/seller-dashboard/addMedicine",
+                title: "All Medicine",
+                url: "/seller-dashboard/allMedicine",
                 icon: Pill
             },
             {
-                title: "All Users",
-                url: "/admin-dashboard/allUsers",
-                icon: Users
+                title: "Customer Orders",
+                url: "/seller-dashboard/customerOrders",
+                icon: Truck
+            },
+            {
+                title: "Order History",
+                url: "/seller-dashboard/orderHistory",
+                icon: Truck
             },
             {
                 title: "Customer Orders",

@@ -1,4 +1,4 @@
-import AddMedicineForm from "@/components/Dashboard/AdminComponent/AdminAddMedicineForm";
+import SellerAddMedicineForm from "@/components/Dashboard/SellerComponent/SellerAddMedicineForm";
 import { categoryService } from "@/services/category.server";
 export const dynamic = "force-dynamic";
 export default async function AddMedicinePage() {
@@ -16,7 +16,7 @@ export default async function AddMedicinePage() {
 
     return (
         <div className="p-4">
-             <AddMedicineForm categories={categories} />
+             <SellerAddMedicineForm categories={categories} />
         </div>
     );
 }

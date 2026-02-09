@@ -8,7 +8,7 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
-import { handleOrderAction } from "@/actions/order";
+import { handleOrderAction } from "@/actions/order.actions";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 

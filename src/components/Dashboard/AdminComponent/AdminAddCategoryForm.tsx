@@ -17,7 +17,7 @@ import {
 import { toast } from "sonner";
 import { addCategoryAction } from "@/actions/category.actions";
 
-export default function AddCategoryForm() {
+export default function AdminAddCategoryForm() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
 

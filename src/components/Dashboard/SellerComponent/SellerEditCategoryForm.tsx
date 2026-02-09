@@ -11,7 +11,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Label } from "@/components/ui/label";
 import { Loader2, Save, X } from "lucide-react";
 
-export default function EditCategoryForm({ category }: { category: any }) {
+export default function SellerEditCategoryForm({ category }: { category: any }) {
     const router = useRouter();
 
     const { register, handleSubmit, formState: { isSubmitting, isDirty } } = useForm({
@@ -27,7 +27,7 @@ export default function EditCategoryForm({ category }: { category: any }) {
 
         if (res?.success) {
             toast.success("Category updated successfully!");
-            router.push("/admin-dashboard/allCategory");
+            router.push("/seller-dashboard/allCategory");
             router.refresh();
         } else {
             const errorMsg = typeof res?.error === 'object' ? res.error.message : res?.error;
@@ -86,17 +86,19 @@ export default function EditCategoryForm({ category }: { category: any }) {
                         disabled={isSubmitting || !isDirty}
                         className="flex-1 gap-2 bg-blue-600 hover:bg-blue-700 text-white"
                     >
-                        {isSubmitting ? (
-                            <>
-                                <Loader2 className="h-4 w-4 animate-spin" />
-                                Saving...
-                            </>
-                        ) : (
-                            <>
-                                <Save className="h-4 w-4" />
-                                Save Changes
-                            </>
-                        )}
+                        {
+                            isSubmitting ? (
+                                <>
+                                    <Loader2 className="h-4 w-4 animate-spin" />
+                                    Saving...
+                                </>
+                            ) : (
+                                <>
+                                    <Save className="h-4 w-4" />
+                                    Save Changes
+                                </>
+                            )
+                        }
                     </Button>
                 </CardFooter>
             </form>

@@ -35,19 +35,24 @@ export const adminRoutes: Route[] = [
                 icon: LayoutGrid
             },
             {
-                title: "Add Medicine",
+                title: "All Medicine",
                 url: "/admin-dashboard/allMedicine",
                 icon: Pill
-            },
-            {
-                title: "All Users",
-                url: "/admin-dashboard/allUsers",
-                icon: Users
             },
             {
                 title: "Customer Orders",
                 url: "/admin-dashboard/customerOrders",
                 icon: Truck
+            },
+            {
+                title: "Order History",
+                url: "/admin-dashboard/orderHistory",
+                icon: Truck
+            },
+            {
+                title: "All Users",
+                url: "/admin-dashboard/allUsers",
+                icon: Users
             },
             {
                 title: "My Profile",
