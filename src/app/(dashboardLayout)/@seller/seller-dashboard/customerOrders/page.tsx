@@ -30,7 +30,7 @@ export default async function CustomerOrdersPage() {
                         <div className="h-8 w-1 bg-indigo-600 rounded-full" />
                         <h1 className="text-4xl font-black text-black tracking-tight">Active Orders</h1>
                     </div>
-                    <p className="text-slate-600 font-medium ml-4 uppercase text-xs tracking-widest">
+                    <p className="text-slate-600 font-medium ml-4 text-[15px]">
                         {activeOrders.length} Pending Fulfilments
                     </p>
                 </header>
@@ -45,8 +45,8 @@ export default async function CustomerOrdersPage() {
                                         <div className="space-y-8">
                                             <div className="flex justify-between items-start">
                                                 <div className="space-y-1">
-                                                    <span className="text-[12px] font-black text-slate-400 uppercase tracking-widest">Order ID</span>
-                                                    <h3 className="text-sm font-black text-indigo-600 font-mono">#{order.id.slice(0, 8).toUpperCase()}</h3>
+                                                    <span className="text-[15px] font-black text-slate-500">Order ID</span>
+                                                    <h3 className="text-sm font-black text-indigo-600 font-mono">#{order.id.slice(0, 8)}</h3>
                                                 </div>
                                                 <span className="bg-white border border-slate-200 text-[10px] font-bold px-2 py-1 rounded-lg shadow-sm text-black">
                                                     {formatDate(order.createdAt)}
@@ -59,7 +59,7 @@ export default async function CustomerOrdersPage() {
                                                         <MapPin size={16} />
                                                     </div>
                                                     <div>
-                                                        <span className="text-[11px] font-bold text-slate-400 uppercase">Destination</span>
+                                                        <span className="text-[13px] font-bold text-slate-500">Destination</span>
                                                         <p className="text-sm font-bold text-slate-800 leading-tight mt-0.5 capitalize">{order.shippingAddress || "N/A"}</p>
                                                     </div>
                                                 </div>
@@ -69,7 +69,7 @@ export default async function CustomerOrdersPage() {
                                                         <Phone size={16} />
                                                     </div>
                                                     <div>
-                                                        <span className="text-[11px] font-bold text-slate-400 uppercase">Contact</span>
+                                                        <span className="text-[13px] font-bold text-slate-500">Contact</span>
                                                         <p className="text-sm font-bold text-slate-800 mt-0.5">{order.phoneNumber || "N/A"}</p>
                                                     </div>
                                                 </div>
@@ -77,7 +77,7 @@ export default async function CustomerOrdersPage() {
 
                                             <div className="flex items-center justify-between px-2 pt-2">
                                                 <div className="flex flex-col">
-                                                    <span className="text-[11px] font-bold text-slate-400 uppercase">Total Revenue</span>
+                                                    <span className="text-[13px] font-bold text-slate-500 ">Total Revenue</span>
                                                     <span className="text-2xl font-black text-slate-900">${order.totalAmount}</span>
                                                 </div>
                                                 <div className="h-8 w-8 rounded-full bg-emerald-500/10 flex items-center justify-center">
@@ -89,7 +89,7 @@ export default async function CustomerOrdersPage() {
 
                                     <div className="flex-1 p-8">
                                         <div className="flex items-center justify-between mb-8">
-                                            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Medicine Details</span>
+                                            <span className="text-[15px] font-bold text-slate-500">Medicine Details</span>
                                             <span className="h-px flex-1 bg-slate-100 mx-4" />
                                         </div>
 
@@ -126,7 +126,7 @@ export default async function CustomerOrdersPage() {
                                     <div className="xl:w-80 p-8 bg-slate-50/30 flex flex-col justify-center border-t xl:border-t-0 xl:border-l border-slate-100">
                                         <div className="space-y-6">
                                             <div className="text-center p-6 bg-white rounded-[24px] border border-slate-100 shadow-sm">
-                                                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-widest block mb-3">Live Status</span>
+                                                <span className="text-[15px] font-bold text-slate-500 block mb-3">Live Status</span>
                                                 <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-[11px] font-black uppercase tracking-widest bg-indigo-50 text-indigo-600 border border-indigo-100">
                                                     <div className="h-1.5 w-1.5 rounded-full bg-indigo-500 animate-pulse" />
                                                     {order.status}
@@ -134,7 +134,7 @@ export default async function CustomerOrdersPage() {
                                             </div>
 
                                             <div className="space-y-3">
-                                                <label className="text-xs font-black text-slate-800 block text-center uppercase tracking-tighter">Update Progress</label>
+                                                <label className="text-[15px] font-black text-slate-800 block text-center">Update Progress</label>
                                                 <div className="relative group/dropdown">
                                                     <OrderStatusDropdown id={order.id} currentStatus={order.status} />
                                                 </div>

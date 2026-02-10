@@ -83,23 +83,25 @@ const Navbar1 = ({
                   <NavigationMenuTrigger className="text-blue-600 font-bold">Category</NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="grid w-[500px] grid-cols-2 gap-3 p-4">
-                      {categories.length > 0 ? (
-                        categories.map((cat: any) => (
-                          <li key={cat.id}>
-                            <NavigationMenuLink asChild>
-                              <Link href={`/store/${cat.id}`} className="flex select-none gap-3 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-blue-50 focus:bg-muted">
-                                <Pill className="size-5 text-blue-500 shrink-0" />
-                                <div>
-                                  <div className="text-sm font-bold leading-none">{cat.categoryName}</div>
-                                  <p className="line-clamp-1 text-xs text-muted-foreground mt-1">Explore medical supplies</p>
-                                </div>
-                              </Link>
-                            </NavigationMenuLink>
-                          </li>
-                        ))
-                      ) : (
-                        <p className="p-4 text-sm text-muted-foreground text-center col-span-2">No categories found</p>
-                      )}
+                      {
+                        categories.length > 0 ? (
+                          categories.map((cat: any) => (
+                            <li key={cat.id}>
+                              <NavigationMenuLink asChild>
+                                <Link href={`/store/${cat.id}`} className="flex select-none gap-3 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-blue-50 focus:bg-muted">
+                                  <Pill className="size-5 text-blue-500 shrink-0" />
+                                  <div>
+                                    <div className="text-sm font-bold leading-none">{cat.categoryName}</div>
+                                    <p className="line-clamp-1 text-xs text-muted-foreground mt-1">Explore medical supplies</p>
+                                  </div>
+                                </Link>
+                              </NavigationMenuLink>
+                            </li>
+                          ))
+                        ) : (
+                          <p className="p-4 text-sm text-muted-foreground text-center col-span-2">No categories found</p>
+                        )
+                      }
                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
@@ -107,15 +109,16 @@ const Navbar1 = ({
             </NavigationMenu>
           </div>
 
-          {/* Search, Cart & Auth */}
           <div className="flex items-center gap-3 flex-1 justify-end max-w-xl">
-            {/* Search Bar Container with higher Z-index */}
             <div className="relative flex-1 max-w-xs z-[110]">
               <SearchBar />
             </div>
 
             <div className="flex items-center gap-2 shrink-0">
-              <CartDropdown />
+              {!isPending && session && (
+                <CartDropdown />
+              )}
+
               <ModeToggle />
               {!isPending && (
                 <>
