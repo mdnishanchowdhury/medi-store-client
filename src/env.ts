@@ -6,8 +6,7 @@ export const env = createEnv({
         BACKEND_URL: z.url(),
         FRONTEND_URL: z.url(),
         API_URL: z.url(),
-        AUTH_URL: z.url(),
-        AUTH_BASE_URL: z.url(),
+        AUTH_URL: z.url()
     },
     client: {
         NEXT_PUBLIC_TEST: z.string(),
@@ -17,7 +16,6 @@ export const env = createEnv({
         FRONTEND_URL: process.env.FRONTEND_URL,
         API_URL: process.env.API_URL,
         AUTH_URL: process.env.AUTH_URL,
-        NEXT_PUBLIC_TEST: process.env.NEXT_PUBLIC_TEST,
-        AUTH_BASE_URL: process.env.AUTH_BASE_URL,
+        NEXT_PUBLIC_TEST: process.env.NEXT_PUBLIC_TEST
     }
 });
