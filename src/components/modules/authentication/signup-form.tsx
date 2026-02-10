@@ -15,6 +15,7 @@ import { useForm } from "@tanstack/react-form";
 import Link from "next/link";
 import { toast } from "sonner";
 import * as z from "zod";
+import { useSearchParams } from "next/navigation";
 
 
 const formSchema = z.object({
@@ -26,11 +27,15 @@ const formSchema = z.object({
 
 
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
+  const searchParams = useSearchParams();
+
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
+
 
   const handleGoogleLogin = async () => {
     const data = await authClient.signIn.social({
       provider: "google",
-      callbackURL: "http://localhost:3000"
+      callbackURL: window.location.origin + callbackUrl
     });
     console.log("data", data)
   };
