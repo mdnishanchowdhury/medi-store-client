@@ -30,11 +30,14 @@ export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
   const callbackUrl = searchParams.get("callbackUrl") || "/";
 
   const handleGoogleLogin = async () => {
+    const callbackURI = `${window.location.origin}/api/auth/callback/google`;
+
     const data = await authClient.signIn.social({
       provider: "google",
-      callbackURL: window.location.origin + callbackUrl
+      callbackURL: callbackURI
     });
   };
+
 
   const form = useForm({
     defaultValues: {

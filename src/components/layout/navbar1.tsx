@@ -144,8 +144,12 @@ const Navbar1 = ({
         {/* Mobile View */}
         <div className="flex lg:hidden items-center justify-between">
           <Link href={logo.url}><img src={logo.src} className="max-h-8 dark:invert" alt={logo.alt} /></Link>
+
+
           <div className="flex items-center gap-2">
-            <CartDropdown />
+            {!isPending && session && (
+              <CartDropdown />
+            )}
             <ModeToggle />
             <Sheet>
               <SheetTrigger asChild><Button variant="outline" size="icon"><Menu className="size-4" /></Button></SheetTrigger>
@@ -153,7 +157,7 @@ const Navbar1 = ({
                 <div className="mt-4 mb-4">
                   <SearchBar />
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2  px-5">
                   <Accordion type="single" collapsible>
                     <AccordionItem value="categories" className="border-none">
                       <AccordionTrigger className="text-md font-bold text-blue-600">Categories</AccordionTrigger>
@@ -168,9 +172,31 @@ const Navbar1 = ({
                     <Link key={item.title} href={item.url} className="text-md font-semibold block py-3 border-b">{item.title}</Link>
                   ))}
                 </div>
+
+
+                <div className="px-5">
+                  {!isPending && (
+                    <>
+                      {session ? (
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-medium hidden xl:block">Hi, {session.user.name.split(" ")[0]}</span>
+                          <Button variant="destructive" size="sm" onClick={handleLogout} className="h-8">
+                            <LogOut className="size-4 mr-1" /> Logout
+                          </Button>
+                        </div>
+                      ) : (
+                        <div className="flex gap-2">
+                          <Button asChild variant="outline" size="sm" className="h-8"><Link href={auth.login.url}>Login</Link></Button>
+                          <Button asChild size="sm" className="h-8"><Link href={auth.signup.url}>Sign up</Link></Button>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
               </SheetContent>
             </Sheet>
           </div>
+
         </div>
       </div>
     </section>

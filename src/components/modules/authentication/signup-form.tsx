@@ -31,14 +31,14 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
 
   const callbackUrl = searchParams.get("callbackUrl") || "/";
 
-
   const handleGoogleLogin = async () => {
+    const callbackURI = `${window.location.origin}/api/auth/callback/google`;
     const data = await authClient.signIn.social({
       provider: "google",
-      callbackURL: window.location.origin + callbackUrl
+      callbackURL: callbackURI
     });
-    console.log("data", data)
   };
+
 
   const form = useForm({
     defaultValues: {
