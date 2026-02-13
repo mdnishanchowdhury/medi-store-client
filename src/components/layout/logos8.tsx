@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { motion, Variants } from "framer-motion";
+import { motion } from "framer-motion";
 
 interface Logo {
   name: string;
@@ -11,72 +11,56 @@ interface Logo {
 
 const PHARMA_LOGOS: Logo[] = [
   { name: "Pfizer", logo: "https://i.ibb.co.com/Y7BWjjms/image-removebg-preview-1.png", className: "h-8 md:h-10 w-auto" },
-  { name: "Novartis", logo: "https://i.ibb.co.com/Y7BWjjms/image-removebg-preview-1.png", className: "h-6 md:h-8 w-auto" },
-  { name: "GSK", logo: "https://i.ibb.co.com/Y7BWjjms/image-removebg-preview-1.png", className: "h-8 md:h-10 w-auto" },
-  { name: "Roche", logo: "https://i.ibb.co.com/Y7BWjjms/image-removebg-preview-1.png", className: "h-7 md:h-9 w-auto" },
-  { name: "Sanofi", logo: "https://i.ibb.co.com/Y7BWjjms/image-removebg-preview-1.png", className: "h-6 md:h-7 w-auto" },
-  { name: "Bayer", logo: "https://i.ibb.co.com/Y7BWjjms/image-removebg-preview-1.png", className: "h-10 md:h-12 w-auto" },
-  { name: "Abbott", logo: "https://i.ibb.co.com/Y7BWjjms/image-removebg-preview-1.png", className: "h-6 md:h-7 w-auto" },
-  { name: "AstraZeneca", logo: "https://i.ibb.co.com/Y7BWjjms/image-removebg-preview-1.png", className: "h-7 md:h-9 w-auto" }
+  { name: "Novartis", logo: "https://i.ibb.co.com/PzFr27Ps/Novartis.png", className: "h-7 md:h-9 w-auto" },
+  { name: "GSK", logo: "https://i.ibb.co.com/Pz5kTTSX/GSK-Logo-2000.png", className: "h-8 md:h-10 w-auto" },
+  { name: "Roche", logo: "https://i.ibb.co.com/3yJ2f2p6/images-removebg-preview.png", className: "h-7 md:h-9 w-auto" },
+  { name: "Sanofi", logo: "https://i.ibb.co.com/vx15q0kz/Sanofi-logo-horizontal.png", className: "h-7 md:h-8 w-auto" },
+  { name: "Bayer", logo: "https://i.ibb.co.com/xq88vpwW/logo.png", className: "h-9 md:h-11 w-auto" },
+  { name: "Abbott", logo: "https://i.ibb.co.com/Z6cF2GbC/Abbott-Laboratories-logo-svg.png", className: "h-7 md:h-8 w-auto" },
+  { name: "AstraZeneca", logo: "https://i.ibb.co.com/FLr3YCwj/astrazeneca.png", className: "h-7 md:h-9 w-auto" }
 ];
 
 const Logos8 = ({ className }: { className?: string }) => {
-  const firstRow = [...PHARMA_LOGOS, ...PHARMA_LOGOS];
-  const secondRow = [...PHARMA_LOGOS, ...PHARMA_LOGOS];
-
-  const marqueeVariants = (direction: "left" | "right"): Variants => ({
-    animate: {
-      x: direction === "left" ? ["0%", "-50%"] : ["-50%", "0%"],
-      transition: {
-        x: {
-          repeat: Infinity,
-          repeatType: "loop" as const, 
-          duration: 30,
-          ease: "linear",
-        },
-      },
-    },
-  });
+  const logos = [...PHARMA_LOGOS, ...PHARMA_LOGOS];
 
   return (
-    <section className={cn("py-5 overflow-hidden", className)}>
-      <div className="container mx-auto px-4 mb-10 text-center">
-        <h2 className="text-xl md:text-2xl font-bold text-slate-800">Our Authorized Partners</h2>
-        <div className="h-1 w-20 bg-blue-600 mx-auto mt-3 rounded-full" />
-      </div>
+    <section
+      className={cn(
+        "relative py-2 overflow-hidden bg-gradient-to-b from-white via-blue-50/40 to-white",
+        className
+      )}
+    >
 
-      <div className="relative flex flex-col gap-8 md:gap-12">
-        {/* Row 1 */}
+      {/* Glass Container */}
+      <div className="relative">
+        <div className="absolute inset-0 bg-white/40 backdrop-blur-xl rounded-3xl" />
+
+        {/* Fade edges */}
+        <div className="pointer-events-none absolute left-0 top-0 h-full w-82 bg-gradient-to-r from-white to-transparent z-10" />
+        <div className="pointer-events-none absolute right-0 top-0 h-full w-32 bg-gradient-to-l from-white to-transparent z-10" />
+
         <motion.div
-          className="flex whitespace-nowrap gap-12 md:gap-20 items-center"
-          variants={marqueeVariants("left")}
-          animate="animate"
-          style={{ cursor: "default" }}
+          className="flex gap-20 items-center whitespace-nowrap py-3"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{
+            repeat: Infinity,
+            duration: 35,
+            ease: "linear",
+          }}
         >
-          {firstRow.map((logo, index) => (
-            <div key={index} className="flex-shrink-0 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
-              <img src={logo.logo} alt={logo.name} className={logo.className} />
+          {logos.map((logo, index) => (
+            <div
+              key={index}
+              className="flex-shrink-0 transition-all  hover:grayscale-0 hover:opacity-100 hover:scale-110"
+            >
+              <img
+                src={logo.logo}
+                alt={logo.name}
+                className={logo.className}
+              />
             </div>
           ))}
         </motion.div>
-
-        {/* Row 2 */}
-        <motion.div
-          className="flex whitespace-nowrap gap-12 md:gap-20 items-center"
-          variants={marqueeVariants("right")}
-          animate="animate"
-          style={{ cursor: "default" }}
-        >
-          {secondRow.map((logo, index) => (
-            <div key={index} className="flex-shrink-0 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
-              <img src={logo.logo} alt={logo.name} className={logo.className} />
-            </div>
-          ))}
-        </motion.div>
-      </div>
-
-      <div className="mt-12 flex justify-center">
-        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Dispensing Quality Since 2024</p>
       </div>
     </section>
   );

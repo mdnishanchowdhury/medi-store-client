@@ -15,6 +15,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import HomeSections from "@/components/layout/HomeSections";
 
 export const dynamic = "force-dynamic";
 
@@ -159,6 +160,7 @@ export default async function Home({
           </section>
         </div>
       </div>
+      <HomeSections/>
       <Logos8 />
       <Help1 />
     </main>
