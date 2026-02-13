@@ -40,6 +40,8 @@ export interface GetMedicinesParams {
     minPrice?: number;
     maxPrice?: number;
     isActive?: boolean;
+    page?: number;
+    limit?: number;
 }
 export interface addMedicine {
     name: string;

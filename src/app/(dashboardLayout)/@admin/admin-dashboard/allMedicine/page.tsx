@@ -1,5 +1,14 @@
-import MedicineList from "@/components/Dashboard/AdminComponent/AdminMedicineList";
-export const dynamic = "force-dynamic";
-export default function AdminAllMedicine() {
-  return <MedicineList/>;
+import AdminMedicineList from "@/components/Dashboard/AdminComponent/AdminMedicineList";
+
+
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
+  return (
+    <div>
+      <AdminMedicineList searchParams={searchParams} />
+    </div>
+  );
 }

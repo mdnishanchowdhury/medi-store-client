@@ -40,15 +40,16 @@ export default async function AllUsersPage() {
                         <table className="w-full text-left border-collapse">
                             <thead>
                                 <tr className="bg-slate-50/50 border-b border-slate-100">
-                                    <th className="px-6 py-4 text-[11px] font-black text-slate-400 uppercase tracking-widest">User Info</th>
-                                    <th className="px-6 py-4 text-[11px] font-black text-slate-400 uppercase tracking-widest">Contact</th>
-                                    <th className="px-6 py-4 text-[11px] font-black text-slate-400 uppercase tracking-widest">Role & Status</th>
-                                    <th className="px-6 py-4 text-[11px] font-black text-slate-400 uppercase tracking-widest">Joined</th>
-                                    <th className="px-6 py-4 text-[11px] font-black text-slate-400 uppercase tracking-widest text-right">Action</th>
+                                    <th className="px-6 py-4 text-[13px] font-black text-black">User Info</th>
+                                    <th className="px-6 py-4 text-[13px] font-black text-black">Contact</th>
+                                    <th className="px-6 py-4 text-[13px] font-black text-black">Role & Status</th>
+                                    <th className="px-6 py-4 text-[13px] font-black text-black">Joined</th>
+                                    <th className="px-6 py-4 text-[13px] font-black text-black text-right">Action</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-50">
-                                {users.map((user: any) => (
+                                {
+                                users.map((user: any) => (
                                     <tr key={user._id || user.id} className="hover:bg-slate-50/30 transition-colors group">
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-3">

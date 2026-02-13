@@ -3,6 +3,8 @@ import {
     UserCircle,
     LayoutDashboard,
     Settings,
+    ShoppingBag,
+    History,
     Home,
     Truck,
     Users,
@@ -42,12 +44,12 @@ export const adminRoutes: Route[] = [
             {
                 title: "Customer Orders",
                 url: "/admin-dashboard/customerOrders",
-                icon: Truck
+                icon: ShoppingBag 
             },
             {
                 title: "Order History",
                 url: "/admin-dashboard/orderHistory",
-                icon: Truck
+                icon: History
             },
             {
                 title: "All Users",

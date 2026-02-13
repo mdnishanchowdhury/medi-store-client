@@ -10,8 +10,8 @@ export default function HeroMedicine({ className }: HeroProps) {
     <section className={cn("relative w-full overflow-hidden bg-[#f8fafc] dark:bg-black ", className)}>
       <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 bg-green-100 rounded-full blur-3xl opacity-50" />
 
-      <div className="container relative mx-auto px-4 pt-30 ">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="container relative mx-auto px-4 pt-8 md:pt-30 ">
+        <div className="grid lg:grid-cols-2 md:gap-12 items-center">
 
           <div className="space-y-8 animate-in fade-in slide-in-from-left duration-700">
             <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-4 py-1.5 rounded-full text-sm font-semibold border border-green-200">
