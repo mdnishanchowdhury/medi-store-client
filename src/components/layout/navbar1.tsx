@@ -112,7 +112,6 @@ const Navbar1 = ({
                                     isCatActive ? "bg-blue-50 border-l-4 border-blue-500" : ""
                                   )}
                                 >
-                                  {/* <Pill className={cn("size-5 shrink-0", isCatActive ? "text-blue-600" : "text-blue-500")} /> */}
                                   <div>
                                     <div className={cn("text-sm font-bold leading-none flex gap-2", isCatActive ? "text-blue-600" : "")}><Pill /> {cat.categoryName}</div>
                                   </div>
@@ -143,7 +142,6 @@ const Navbar1 = ({
                 <>
                   {session ? (
                     <div className="flex items-center gap-2">
-                      <span className="text-xs font-medium hidden xl:block text-slate-700 dark:text-slate-200">Hi, {session.user.name.split(" ")[0]}</span>
                       <Button variant="destructive" size="sm" onClick={handleLogout} className="h-8">
                         <LogOut className="size-4 mr-1" /> Logout
                       </Button>

@@ -47,7 +47,7 @@ export default function ProfileHeader() {
                         </AvatarFallback>
                     </Avatar>
 
-                    <div className="flex items-center gap-2 group-data-[collapsible=icon]:hidden">
+                    <div className="hidden sm:flex items-center gap-2 group-data-[collapsible=icon]:hidden">
                         <div className="flex flex-col items-start leading-none">
                             <span className="text-[14px] font-semibold text-slate-800 truncate max-w-[120px]">
                                 {session?.user?.name || "Emma Kwan"}

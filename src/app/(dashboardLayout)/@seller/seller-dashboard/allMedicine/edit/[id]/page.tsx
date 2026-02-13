@@ -28,6 +28,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
         notFound();
     }
 
+
     return (
         <div className="max-w-4xl mx-auto p-6">
             <SellerEditMedicineForm medicine={medicine} categories={categories} />

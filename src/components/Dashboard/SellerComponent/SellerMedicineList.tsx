@@ -60,7 +60,7 @@ export default async function SellerMedicineList({
         return category ? category.categoryName : "N/A";
     };
 
-    const createPageURL = (p: number) => `/admin-dashboard/allMedicine?page=${p}`;
+    const createPageURL = (p: number) => `/seller-dashboard/allMedicine?page=${p}`;
 
     return (
         <div className="p-4 bg-white dark:bg-slate-950 min-h-screen">
@@ -76,7 +76,7 @@ export default async function SellerMedicineList({
                         </p>
                     </div>
                 </div>
-                <Link href="/admin-dashboard/allMedicine/addMedicine">
+                <Link href="/seller-dashboard/allMedicine/addMedicine">
                     <Button className="bg-blue-600 hover:bg-blue-700 shadow-md">Add New Medicine</Button>
                 </Link>
             </div>
@@ -113,7 +113,7 @@ export default async function SellerMedicineList({
                                             </span>
                                         </TableCell>
                                         <TableCell className="text-right flex justify-end gap-2">
-                                            <Link href={`/admin-dashboard/allMedicine/edit/${medi.id || medi._id}`}>
+                                            <Link href={`/seller-dashboard/allMedicine/edit/${medi.id || medi._id}`}>
                                                 <Button variant="outline" size="icon" className="h-8 w-8 text-blue-600">
                                                     <Edit className="h-4 w-4" />
                                                 </Button>
