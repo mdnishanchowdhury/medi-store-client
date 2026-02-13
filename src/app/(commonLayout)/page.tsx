@@ -10,14 +10,13 @@ import Link from "next/link";
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-export const dynamic = "force-dynamic";
 
+export const dynamic = "force-dynamic";
 
 export default async function Home({
   searchParams,
@@ -28,7 +27,6 @@ export default async function Home({
     minPrice?: string;
     maxPrice?: string;
     page?: string;
-    limit?: number;
   }>;
 }) {
   const params = await searchParams;
@@ -53,9 +51,13 @@ export default async function Home({
       { cache: "no-store" }
     );
 
-    if (res?.data) {
-      medi = res.data.data || [];
-      meta = res.data.meta || { total: 0, totalPages: 0 };
+    const responseData = res as any;
+    if (responseData?.success) {
+      medi = responseData.data || [];
+      meta = responseData.meta || { total: 0, totalPages: 0 };
+    } else {
+      medi = responseData?.data?.data || responseData?.data || [];
+      meta = responseData?.data?.meta || responseData?.meta || { total: 0, totalPages: 0 };
     }
   } catch (error) {
     console.error("Fetch Error:", error);
@@ -63,8 +65,9 @@ export default async function Home({
 
   let categories: Category[] = [];
   try {
-    const { data } = await categoryService.getCategories({ cache: "no-store" });
-    categories = data ?? [];
+    const catRes = await categoryService.getCategories({ cache: "no-store" });
+    const catData = catRes as any;
+    categories = catData?.data || catData || [];
   } catch (error) {
     categories = [];
   }
@@ -86,25 +89,11 @@ export default async function Home({
       <div className="container mx-auto px-4 pb-10">
         <div className="flex flex-col lg:flex-row gap-6 mt-6">
 
-          <aside className="w-full lg:w-1/4 shrink-0 space-y-4">
+          <aside className="w-75 shrink-0 space-y-4">
             <CategorySection categories={categories} />
-
-            <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800">
-              <h3 className="font-bold text-slate-800 dark:text-white mb-4 text-lg">Price Filter</h3>
-              <form method="GET" className="space-y-3">
-                {search && <input type="hidden" name="search" value={search} />}
-                {category && <input type="hidden" name="category" value={category} />}
-                <div className="grid grid-cols-2 gap-2">
-                  <input type="number" name="minPrice" placeholder="Min" defaultValue={minPrice} className="border p-2 rounded-xl text-sm w-full outline-none focus:ring-2 focus:ring-blue-500 transition-all" />
-                  <input type="number" name="maxPrice" placeholder="Max" defaultValue={maxPrice} className="border p-2 rounded-xl text-sm w-full outline-none focus:ring-2 focus:ring-blue-500 transition-all" />
-                </div>
-                <button type="submit" className="w-full bg-blue-600 text-white py-2.5 rounded-xl font-bold hover:bg-blue-700 transition-all active:scale-[0.98]">
-                  Apply Filter
-                </button>
-              </form>
-            </div>
           </aside>
 
+          {/* Main Content */}
           <section className="w-full lg:w-3/4">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100">
@@ -118,11 +107,12 @@ export default async function Home({
             {medi.length > 0 ? (
               <>
                 <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                  {medi.map((medicine) => (
-                    <MediCards key={medicine.id} medicine={medicine} />
+                  {medi.map((medicine: any) => (
+                    <MediCards key={medicine.id || medicine._id} medicine={medicine} />
                   ))}
                 </div>
 
+                {/* Pagination */}
                 {meta.totalPages > 1 && (
                   <div className="mt-12">
                     <Pagination>
@@ -134,37 +124,18 @@ export default async function Home({
                           />
                         </PaginationItem>
 
-                        {(() => {
-                          const pages = [];
-                          const total = meta.totalPages;
-                          if (total <= 5) {
-                            for (let i = 1; i <= total; i++) pages.push(i);
-                          } else {
-                            pages.push(1);
-                            if (currentPage > 3) pages.push("ellipsis-1");
-                            const start = Math.max(2, currentPage - 1);
-                            const end = Math.min(total - 1, currentPage + 1);
-                            for (let i = start; i <= end; i++) { if (!pages.includes(i)) pages.push(i); }
-                            if (currentPage < total - 2) pages.push("ellipsis-2");
-                            if (!pages.includes(total)) pages.push(total);
-                          }
-
-                          return pages.map((p, idx) => (
-                            <PaginationItem key={idx}>
-                              {typeof p === "string" ? (
-                                <PaginationEllipsis />
-                              ) : (
-                                <PaginationLink
-                                  href={createPageURL(p)}
-                                  isActive={p === currentPage}
-                                  className={p === currentPage ? "bg-blue-600 text-white hover:bg-blue-700 hover:text-white rounded-xl shadow-md border-none" : "rounded-xl"}
-                                >
-                                  {p}
-                                </PaginationLink>
-                              )}
-                            </PaginationItem>
-                          ));
-                        })()}
+                        {/* Page Numbers Logic */}
+                        {Array.from({ length: meta.totalPages }, (_, i) => i + 1).map((p) => (
+                          <PaginationItem key={p}>
+                            <PaginationLink
+                              href={createPageURL(p)}
+                              isActive={p === currentPage}
+                              className={p === currentPage ? "bg-blue-600 text-white rounded-xl" : "rounded-xl"}
+                            >
+                              {p}
+                            </PaginationLink>
+                          </PaginationItem>
+                        ))}
 
                         <PaginationItem>
                           <PaginationNext

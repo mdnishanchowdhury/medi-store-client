@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { LayoutGrid, CircleDollarSign, X, Check } from 'lucide-react';
+import PriceFilter from './PriceFilter';
 
 const CategorySection = ({ categories }) => {
     const searchParams = useSearchParams();
@@ -13,8 +14,9 @@ const CategorySection = ({ categories }) => {
     const closeDrawer = () => setActiveDrawer(null);
 
     return (
-        <div className="w-full">
-            <div className="lg:hidden flex gap-2 p-4 bg-white border-b sticky top-0 z-20">
+        <div className="ml-15 md:ml-0">
+            {/* Mobile Buttons */}
+            <div className="lg:hidden flex gap-2 p-4 bg-white border rounded-2xl sticky top-0 z-20">
                 <button
                     onClick={() => setActiveDrawer('category')}
                     className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-700 active:bg-slate-100"
@@ -31,15 +33,18 @@ const CategorySection = ({ categories }) => {
                 </button>
             </div>
 
+            {/* Mobile Drawer */}
             {activeDrawer && (
                 <div className="fixed inset-0 z-[100] lg:hidden">
                     <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" onClick={closeDrawer} />
-                    <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-[24px] p-6 shadow-2xl max-h-[80vh] overflow-y-auto animate-in slide-in-from-bottom duration-300">
+                    <div className="absolute bottom-0 left-0 right-0  rounded-t-[24px] p-6 shadow-2xl max-h-[80vh] overflow-y-auto animate-in slide-in-from-bottom duration-300">
                         <div className="flex justify-between items-center mb-6">
                             <h2 className="text-lg font-black text-slate-900">
                                 {activeDrawer === 'category' ? 'Select Category' : 'Set Price Range'}
                             </h2>
-                            <button onClick={closeDrawer} className="p-2 bg-slate-100 rounded-full text-slate-500"><X size={20} /></button>
+                            <button onClick={closeDrawer} className="p-2 bg-slate-100 rounded-full text-slate-500">
+                                <X size={20} />
+                            </button>
                         </div>
 
                         {activeDrawer === 'category' ? (
@@ -71,20 +76,21 @@ const CategorySection = ({ categories }) => {
                                 })}
                             </div>
                         ) : (
-                            <div className="space-y-6 pb-4">
-                                <div className="p-8 bg-slate-50 rounded-2xl border border-slate-100">
-                                    <input type="range" min="0" max="5000" className="w-full h-2 bg-slate-200 rounded-lg accent-blue-600" />
-                                    <div className="flex justify-between mt-4 text-lg font-black text-slate-900">
-                                        <span>Tk 0</span> <span className="text-blue-600">Tk 1000</span>
-                                    </div>
-                                </div>
-                                <button onClick={closeDrawer} className="w-full py-4 bg-slate-900 text-white rounded-2xl font-bold">Apply Filter</button>
+                            <div className="pb-4">
+                                <PriceFilter />
+                                <button 
+                                    onClick={closeDrawer} 
+                                    className="w-full mt-4 py-3 text-slate-500 text-sm font-medium"
+                                >
+                                    Close
+                                </button>
                             </div>
                         )}
                     </div>
                 </div>
             )}
 
+            {/* Desktop Sidebar */}
             <div className="hidden lg:block w-full max-w-[280px] space-y-4">
                 <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
                     <h2 className="text-[16px] font-black text-slate-800 mb-4 border-b pb-2">Product Categories</h2>
@@ -105,16 +111,7 @@ const CategorySection = ({ categories }) => {
                         })}
                     </div>
                 </div>
-
-                {/* Price Filter */}
-                {/* <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
-                    <h2 className="text-[16px] font-black text-slate-800 mb-4 border-b pb-2">Price Filter</h2>
-                    <div className="space-y-4">
-                        <input type="range" className="w-full h-1.5 bg-slate-200 rounded-lg accent-blue-600" />
-                        <div className="text-sm font-bold text-slate-700">Tk 0 — 1000</div>
-                    </div>
-                </div> */}
-                
+                   <PriceFilter />
             </div>
         </div>
     );
